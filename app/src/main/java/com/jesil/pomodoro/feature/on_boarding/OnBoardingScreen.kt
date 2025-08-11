@@ -28,7 +28,7 @@ fun OnboardingScreen(
     Column(
         modifier = Modifier.fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
-            .padding(vertical = 24.dp, horizontal = 24.dp),
+            .padding(vertical = 32.dp, horizontal = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
             Text(
