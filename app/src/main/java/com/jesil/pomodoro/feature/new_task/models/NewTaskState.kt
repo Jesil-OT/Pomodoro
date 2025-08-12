@@ -2,6 +2,9 @@ package com.jesil.pomodoro.feature.new_task.models
 
 data class NewTaskState(
     val taskName: String = "",
+    val hours: String = "",
+    val minutes: String = "",
+    val seconds: String = "",
     val recentTime: List<RecentTime> = emptyList(),
 )
 

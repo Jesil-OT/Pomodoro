@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
@@ -22,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,6 +38,7 @@ fun TaskTextField(
     isHintVisible: Boolean = false,
     onValueChange: (String) -> Unit,
     placeHolder: @Composable () -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text,
 ) {
     val textFieldBackgroundColor = if (isSystemInDarkTheme()) Color(0xFF243647) else Color(0xFFE8EDF2)
 
@@ -61,6 +64,7 @@ fun TaskTextField(
             color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 16.sp
         ),
+        keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
         decorationBox = { innerTextField ->
             OutlinedTextFieldDefaults.DecorationBox(
                 value = value,

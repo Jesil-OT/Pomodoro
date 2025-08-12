@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import com.jesil.pomodoro.core.theme.PomodoroTheme
 import com.jesil.pomodoro.core.theme.ThemeAnnotation
 import com.jesil.pomodoro.feature.new_task.components.TaskTextField
+import com.jesil.pomodoro.feature.new_task.components.TimePicker
 import com.jesil.pomodoro.feature.new_task.models.NewTaskActions
 import com.jesil.pomodoro.feature.new_task.models.NewTaskState
 import org.koin.androidx.compose.koinViewModel
@@ -118,8 +119,8 @@ fun NewTaskScreenInnerScreen(
                     TaskTextField(
                         modifier = Modifier.fillMaxWidth(),
                         value = state.taskName,
-                        onValueChange = { onAction(NewTaskActions.SetTaskName(state.taskName)) },
-                        isHintVisible = true,
+                        onValueChange = {onAction(NewTaskActions.SetTaskName(it))},
+                        isHintVisible = state.taskName.isEmpty(),
                         placeHolder = {
                             Text(
                                 text = "e.g, Write Report",
@@ -128,6 +129,18 @@ fun NewTaskScreenInnerScreen(
                                 ),
                                 color = textHintColor
                             )
+                        }
+                    )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    TimePicker(
+                        modifier = Modifier.fillMaxWidth(),
+                        hour = state.hours,
+                        minute = state.minutes,
+                        second = state.seconds,
+                        onValueTimeChange = {hour, minute, second ->
+                            onAction(NewTaskActions.SetTaskName(hour))
+                            onAction(NewTaskActions.SetTaskName(minute))
+                            onAction(NewTaskActions.SetTaskName(second))
                         }
                     )
                 }

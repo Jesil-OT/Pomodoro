@@ -17,7 +17,10 @@ class NewTaskViewModel: ViewModel() {
             is NewTaskActions.SetTaskName -> {
                 _taskState.update {
                     it.copy(
-                        taskName = action.name
+                        taskName = action.name,
+                        hours = action.name,
+                        minutes = action.name,
+                        seconds = action.name
                     )
                 }
             }
