@@ -1,7 +1,9 @@
 package com.jesil.pomodoro.feature.new_task
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,8 +12,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,10 +35,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.jesil.pomodoro.core.theme.PomodoroTheme
 import com.jesil.pomodoro.core.theme.ThemeAnnotation
+import com.jesil.pomodoro.feature.new_task.components.RecentTimeItem
 import com.jesil.pomodoro.feature.new_task.components.TaskTextField
 import com.jesil.pomodoro.feature.new_task.components.TimePicker
 import com.jesil.pomodoro.feature.new_task.models.NewTaskActions
 import com.jesil.pomodoro.feature.new_task.models.NewTaskState
+import com.jesil.pomodoro.feature.new_task.models.RecentTime
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -151,6 +158,48 @@ fun NewTaskScreenInnerScreen(
                             onAction(NewTaskActions.SetSeconds(s))
                         }
                     )
+                    Spacer(modifier = Modifier.height(32.dp))
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        onClick = {
+                            onAction(NewTaskActions.StartTask)
+                        },
+                    ) {
+                        Text(
+                            text = "Start",
+                            style = MaterialTheme.typography.titleLarge.copy(
+                                fontSize = 16.sp,
+                                color = MaterialTheme.colorScheme.onPrimary
+                            )
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(32.dp))
+                    AnimatedVisibility(
+                        visible = state.recentTime.isNotEmpty(),
+                    ) {
+                        LazyColumn(
+                            verticalArrangement = Arrangement.spacedBy(16.dp),
+                        ) {
+                            item {
+                                Text(
+                                    text = "Recents",
+                                    style = MaterialTheme.typography.labelMedium.copy(
+                                        fontSize = 16.sp,
+                                        color = MaterialTheme.colorScheme.onPrimary
+                                    ),
+                                )
+                            }
+                            items(state.recentTime) { recent ->
+                                RecentTimeItem(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    state = recent,
+                                    onStartTimer = {
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
             )
         }
@@ -163,8 +212,37 @@ fun NewTaskScreenInnerScreen(
 fun NewTaskScreenInnerScreenPreview() {
     PomodoroTheme {
         NewTaskScreenInnerScreen(
-            state = NewTaskState(),
+            state = NewTaskState(
+                recentTime = fakeRecentTime
+            ),
             onAction = {},
         )
     }
 }
+
+private val fakeRecentTime = listOf<RecentTime>(
+    RecentTime(
+        timeFormatInHMS = "10:50:00",
+        timeFormatInDuration = "10 hours, 50 min"
+    ),
+    RecentTime(
+        timeFormatInHMS = "20:30:10",
+        timeFormatInDuration = "20 hours, 30 min, 10 sec"
+    ),
+    RecentTime(
+        timeFormatInHMS = "50:00",
+        timeFormatInDuration = "50 min"
+    ),
+    RecentTime(
+        timeFormatInHMS = "50:20",
+        timeFormatInDuration = "50 min, 20 sec"
+    ),
+    RecentTime(
+        timeFormatInHMS = "10:50:00",
+        timeFormatInDuration = "10 hours, 50 min"
+    ),
+    RecentTime(
+        timeFormatInHMS = "50:20",
+        timeFormatInDuration = "50 min, 20 sec"
+    )
+)
