@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -30,10 +31,13 @@ import com.jesil.pomodoro.core.theme.ThemeAnnotation
  * **/
 @Composable
 fun TimePicker(
-    hour: String,
+    hour: (String),
     minute: String,
     second: String,
-    onValueTimeChange: (String, String, String) -> Unit,
+//    onHoursChange: (String) -> Unit,
+//    onMinuteChanged: (String) -> Unit,
+//    onSecondChange: (String) -> Unit,
+    onValueChange: (String, String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val textHintColor = if (isSystemInDarkTheme()) Color(0xFF91ADC9) else Color(0xFF4D7399)
@@ -49,7 +53,11 @@ fun TimePicker(
                 TaskTextField(
                     modifier = Modifier.weight(1f),
                     value = hour,
-                    onValueChange = { onValueTimeChange(it, minute, second) },
+                    singleLine = true,
+                    keyboardType = KeyboardType.Number,
+                    onValueChange = {
+                        onValueChange(it, minute, second)
+                    },
                     placeHolder = {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
@@ -65,8 +73,12 @@ fun TimePicker(
                 Spacer(modifier = Modifier.width(16.dp))
                 TaskTextField(
                     modifier = Modifier.weight(1f),
-                    value = hour,
-                    onValueChange = { onValueTimeChange(hour, it, second) },
+                    value = minute,
+                    singleLine = true,
+                    keyboardType = KeyboardType.Number,
+                    onValueChange = {
+                        onValueChange(hour, it, second)
+                    },
                     placeHolder = {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
@@ -82,8 +94,12 @@ fun TimePicker(
                 Spacer(modifier = Modifier.width(16.dp))
                 TaskTextField(
                     modifier = Modifier.weight(1f),
-                    value = hour,
-                    onValueChange = { onValueTimeChange(hour, minute, it) },
+                    value = second,
+                    singleLine = true,
+                    onValueChange = {
+                        onValueChange(hour, minute, it)
+                    },
+                    keyboardType = KeyboardType.Number,
                     placeHolder = {
                         Text(
                             modifier = Modifier.fillMaxWidth(),
@@ -145,7 +161,7 @@ fun TimePickerPreview() {
             hour = "00",
             minute = "00",
             second = "00",
-            onValueTimeChange = { _, _, _ -> }
+            onValueChange = {_, _, _ ->}
         )
     }
 }

@@ -7,4 +7,7 @@ sealed interface NewTaskActions {
     object ResumeTask : NewTaskActions
     object DeleteTask : NewTaskActions
     data class SetTaskName(val name: String) : NewTaskActions
+    data class SetHours(val hours: String) : NewTaskActions
+    data class SetMinutes(val minutes: String) : NewTaskActions
+    data class SetSeconds(val seconds: String) : NewTaskActions
 }

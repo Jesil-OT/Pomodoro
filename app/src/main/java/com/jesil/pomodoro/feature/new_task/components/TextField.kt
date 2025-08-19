@@ -1,7 +1,5 @@
 package com.jesil.pomodoro.feature.new_task.components
 
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -15,10 +13,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -38,7 +34,9 @@ fun TaskTextField(
     isHintVisible: Boolean = false,
     onValueChange: (String) -> Unit,
     placeHolder: @Composable () -> Unit,
+    trailingIcon: @Composable (() -> Unit)? = null,
     keyboardType: KeyboardType = KeyboardType.Text,
+    singleLine: Boolean = false,
 ) {
     val textFieldBackgroundColor = if (isSystemInDarkTheme()) Color(0xFF243647) else Color(0xFFE8EDF2)
 
@@ -78,10 +76,11 @@ fun TaskTextField(
                         }
                     }
                 },
+                trailingIcon = if(value.isNotEmpty()) trailingIcon else null,
                 placeholder = placeHolder,
                 interactionSource = remember { MutableInteractionSource() },
                 colors = fieldColors,
-                singleLine = false,
+                singleLine = singleLine,
                 enabled = true,
                 contentPadding = PaddingValues(horizontal = 16.dp, vertical = 16.dp),
             )

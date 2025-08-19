@@ -1,5 +1,6 @@
 package com.jesil.pomodoro.feature.new_task
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -129,6 +130,13 @@ fun NewTaskScreenInnerScreen(
                                 ),
                                 color = textHintColor
                             )
+                        },
+                        trailingIcon = {
+                            Icon(
+                                modifier = Modifier.clickable(onClick = { onAction(NewTaskActions.SetTaskName("")) }),
+                                imageVector = Icons.Default.Clear,
+                                contentDescription = "Clear Button"
+                            )
                         }
                     )
                     Spacer(modifier = Modifier.height(32.dp))
@@ -137,10 +145,10 @@ fun NewTaskScreenInnerScreen(
                         hour = state.hours,
                         minute = state.minutes,
                         second = state.seconds,
-                        onValueTimeChange = {hour, minute, second ->
-                            onAction(NewTaskActions.SetTaskName(hour))
-                            onAction(NewTaskActions.SetTaskName(minute))
-                            onAction(NewTaskActions.SetTaskName(second))
+                        onValueChange = {h, m, s ->
+                            onAction(NewTaskActions.SetHours(h))
+                            onAction(NewTaskActions.SetMinutes(m))
+                            onAction(NewTaskActions.SetSeconds(s))
                         }
                     )
                 }

@@ -18,12 +18,31 @@ class NewTaskViewModel: ViewModel() {
                 _taskState.update {
                     it.copy(
                         taskName = action.name,
-                        hours = action.name,
-                        minutes = action.name,
-                        seconds = action.name
                     )
                 }
             }
+            is NewTaskActions.SetHours -> {
+                _taskState.update {
+                    it.copy(
+                        hours = if (action.hours > "59") "59" else action.hours
+                    )
+                }
+            }
+            is NewTaskActions.SetMinutes -> {
+                _taskState.update {
+                    it.copy(
+                        minutes = action.minutes
+                    )
+                }
+            }
+            is NewTaskActions.SetSeconds -> {
+                _taskState.update {
+                    it.copy(
+                        seconds = action.seconds
+                    )
+                }
+            }
+
             is NewTaskActions.StartTask -> {}
             is NewTaskActions.CancelTask -> {}
             is NewTaskActions.PauseTask -> {}
