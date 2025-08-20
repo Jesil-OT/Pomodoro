@@ -31,12 +31,9 @@ import com.jesil.pomodoro.core.theme.ThemeAnnotation
  * **/
 @Composable
 fun TimePicker(
-    hour: (String),
+    hour: String,
     minute: String,
     second: String,
-//    onHoursChange: (String) -> Unit,
-//    onMinuteChanged: (String) -> Unit,
-//    onSecondChange: (String) -> Unit,
     onValueChange: (String, String, String) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -119,8 +116,8 @@ fun TimePicker(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "Hours",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = 16.sp,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     ),
                     color = MaterialTheme.colorScheme.onPrimary
@@ -129,8 +126,8 @@ fun TimePicker(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "Minutes",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = 16.sp,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     ),
                     color = MaterialTheme.colorScheme.onPrimary
@@ -139,8 +136,8 @@ fun TimePicker(
                 Text(
                     modifier = Modifier.weight(1f),
                     text = "Seconds",
-                    style = MaterialTheme.typography.titleLarge.copy(
-                        fontSize = 16.sp,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontSize = 14.sp,
                         textAlign = TextAlign.Center
                     ),
                     color = MaterialTheme.colorScheme.onPrimary
